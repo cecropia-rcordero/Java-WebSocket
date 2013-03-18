@@ -1,6 +1,7 @@
 package org.java_websocket;
 
 import org.java_websocket.drafts.Draft;
+
 import org.java_websocket.exceptions.InvalidDataException;
 import org.java_websocket.framing.Framedata;
 import org.java_websocket.framing.Framedata.Opcode;
@@ -10,10 +11,12 @@ import org.java_websocket.handshake.HandshakeImpl1Server;
 import org.java_websocket.handshake.ServerHandshake;
 import org.java_websocket.handshake.ServerHandshakeBuilder;
 
+import java.util.Observable;
+
 /**
  * This class default implements all methods of the WebSocketListener that can be overridden optionally when advances functionalities is needed.<br>
  **/
-public abstract class WebSocketAdapter implements WebSocketListener {
+public abstract class WebSocketAdapter extends Observable implements WebSocketListener {
 
 	/**
 	 * This default implementation does not do anything. Go ahead and overwrite it.
