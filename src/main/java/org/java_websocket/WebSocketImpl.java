@@ -36,6 +36,7 @@ import org.java_websocket.handshake.ServerHandshakeBuilder;
 import org.java_websocket.server.WebSocketServer.WebSocketWorker;
 import org.java_websocket.util.Charsetfunctions;
 
+import java.util.UUID;
 /**
  * Represents one end (client or server) of a single WebSocketImpl connection.
  * Takes care of the "handshake" phase, then allows for easy sending of
@@ -45,6 +46,9 @@ import org.java_websocket.util.Charsetfunctions;
 public class WebSocketImpl implements WebSocket {
 
 	public static int RCVBUF = 16384;
+	
+	private string name;
+	
 
 	public static/*final*/boolean DEBUG = false; // must be final in the future in order to take advantage of VM optimization
 
@@ -109,6 +113,7 @@ public class WebSocketImpl implements WebSocket {
 		this( listener, (Draft) null );
 		this.role = Role.SERVER;
 		// draft.copyInstance will be called when the draft is first needed
+		this.setName( UUID.randomUUID());
 		if( drafts == null || drafts.isEmpty() ) {
 			knownDrafts = defaultdraftlist;
 		} else {
@@ -127,11 +132,15 @@ public class WebSocketImpl implements WebSocket {
 			throw new IllegalArgumentException( "parameters must not be null" );
 		this.outQueue = new LinkedBlockingQueue<ByteBuffer>();
 		inQueue = new LinkedBlockingQueue<ByteBuffer>();
+		this.setName( UUID.randomUUID());
 		this.wsl = listener;
 		this.role = Role.CLIENT;
 		if( draft != null )
 			this.draft = draft.copyInstance();
 	}
+	
+	public String getName(){ return this.name};
+	public void setName(String name){this.name=name};
 
 	@Deprecated
 	public WebSocketImpl( WebSocketListener listener , Draft draft , Socket socket ) {

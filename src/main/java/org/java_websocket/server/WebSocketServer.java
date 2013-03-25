@@ -513,6 +513,7 @@ public abstract class WebSocketServer extends WebSocketAdapter implements Runnab
 	/** @see #removeConnection(WebSocket) */
 	protected boolean addConnection( WebSocket ws ) {
 		synchronized ( connections ) {
+			
 			return this.connections.add( ws );
 		}
 	}

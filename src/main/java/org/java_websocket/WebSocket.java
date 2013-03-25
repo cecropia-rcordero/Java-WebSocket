@@ -8,6 +8,10 @@ import org.java_websocket.drafts.Draft;
 import org.java_websocket.framing.Framedata;
 
 public interface WebSocket {
+	
+
+	public String getName();
+	public void setName(String name);
 	public enum Role {
 		CLIENT, SERVER
 	}
