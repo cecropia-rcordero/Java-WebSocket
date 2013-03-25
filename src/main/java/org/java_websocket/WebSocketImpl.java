@@ -47,7 +47,7 @@ public class WebSocketImpl implements WebSocket {
 
 	public static int RCVBUF = 16384;
 	
-	private string name;
+	private String name;
 	
 
 	public static/*final*/boolean DEBUG = false; // must be final in the future in order to take advantage of VM optimization
@@ -113,7 +113,7 @@ public class WebSocketImpl implements WebSocket {
 		this( listener, (Draft) null );
 		this.role = Role.SERVER;
 		// draft.copyInstance will be called when the draft is first needed
-		this.setName( UUID.randomUUID());
+		this.setName( UUID.randomUUID().toString());
 		if( drafts == null || drafts.isEmpty() ) {
 			knownDrafts = defaultdraftlist;
 		} else {
@@ -132,15 +132,22 @@ public class WebSocketImpl implements WebSocket {
 			throw new IllegalArgumentException( "parameters must not be null" );
 		this.outQueue = new LinkedBlockingQueue<ByteBuffer>();
 		inQueue = new LinkedBlockingQueue<ByteBuffer>();
-		this.setName( UUID.randomUUID());
+		this.setName( UUID.randomUUID().toString());
 		this.wsl = listener;
 		this.role = Role.CLIENT;
 		if( draft != null )
 			this.draft = draft.copyInstance();
 	}
-	
-	public String getName(){ return this.name};
-	public void setName(String name){this.name=name};
+	@Override
+	public String getName()
+	{ 
+		return this.name;
+	}
+	@Override
+	public void setName(String name)
+	{
+		this.name=name;
+	}
 
 	@Deprecated
 	public WebSocketImpl( WebSocketListener listener , Draft draft , Socket socket ) {
@@ -698,7 +705,7 @@ public class WebSocketImpl implements WebSocket {
 
 	@Override
 	public String toString() {
-		return super.toString(); // its nice to be able to set breakpoints here
+		return this.getName();
 	}
 
 	@Override
@@ -720,5 +727,6 @@ public class WebSocketImpl implements WebSocket {
 	public void close() {
 		close( CloseFrame.NORMAL );
 	}
+
 
 }
